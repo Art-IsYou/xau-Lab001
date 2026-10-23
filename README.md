@@ -127,4 +127,8 @@ Tests cover:
 - Data validation logic
 - Gap and spike detection
 - Bar resampling
+<<<<<<< HEAD
 - Edge cases (empty data, DST transitions)
+=======
+- Edge cases (empty data, DST transitions)
+>>>>>>> 7489544 (Primitives and Setup added)
