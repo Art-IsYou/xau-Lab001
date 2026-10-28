@@ -92,7 +92,7 @@ class BreakoutConfig:
 
     # break candle
     min_body_ratio: float = 0.5
-    min_beyond_frac: float = 0.5
+    min_beyond_frac: float = 0.3
     max_range_atr: float | None = None  # optional exhaustion pre-filter (R:R gate is authoritative)
 
     # participation

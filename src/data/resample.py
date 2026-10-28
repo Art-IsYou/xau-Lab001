@@ -19,7 +19,6 @@ _D1_SHIFT = pd.Timedelta(hours=7)   # 17:00 NY + 7h = midnight
 
 SUPPORTED = list(_MINUTES)
 
-
 def _agg(df: pd.DataFrame) -> dict:
     agg = {"open": "first", "high": "max", "low": "min", "close": "last"}
     if "volume" in df.columns:
@@ -27,7 +26,6 @@ def _agg(df: pd.DataFrame) -> dict:
     if "spread" in df.columns:
         agg["spread"] = "mean"
     return agg
-
 
 def resample(df: pd.DataFrame, timeframe: str, drop_incomplete_last: bool = True) -> pd.DataFrame:
     """Resample clean M1 bars to `timeframe` (M5, M15, M30, H1, H4, D1)."""
