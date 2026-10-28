@@ -8,6 +8,7 @@ from primitives import LONG, SHORT
 from setups import STAGES, BreakoutConfig, scan_breakout
 from tests.setups.synth import long_breakout_scenario, mirror, random_walk, trend_series
 
+
 @pytest.fixture(scope="module")
 def scenario():
     return long_breakout_scenario()
@@ -15,6 +16,7 @@ def scenario():
 
 def _scan(df, trend_value=1, cfg=None):
     return scan_breakout(df, cfg=cfg or BreakoutConfig(), trend=trend_series(df, trend_value))
+
 
 def test_long_signal(scenario):
     df, meta = scenario
