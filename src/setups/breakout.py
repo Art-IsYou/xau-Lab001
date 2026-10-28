@@ -92,7 +92,7 @@ class BreakoutConfig:
 
     # break candle
     min_body_ratio: float = 0.5
-    min_beyond_frac: float = 0.5
+    min_beyond_frac: float = 0.3
     max_range_atr: float | None = None  # optional exhaustion pre-filter (R:R gate is authoritative)
 
     # participation
@@ -116,9 +116,11 @@ class BreakoutConfig:
     entry_buffer: float = 0.0
     stop_buffer: float = 0.0
     max_wait_bars: int = 3
-    min_rr: float = 2.5
-    rr_expansion: float = 0.0  # assumed adverse slippage on entry for the planned R:R
-    target_min_touches: int = 1  # any swing level can serve as a target
+    min_rr: float = 1.0
+    rr_expansion: float = 1.5  # assumed adverse slippage on entry for the planned R:R
+    target_min_touches: int = 4  # any swing level can serve as a target
+    target_mode: str = "fixed_r"   # "fixed_r" | "structure"
+    target_r: float = 2
 
     directions: tuple = (LONG, SHORT)
 
@@ -287,14 +289,21 @@ def scan_breakout(
             counts["exhaustion"] += 1
 
             entry, stop = coc_levels(high[t], low[t], d, cfg.entry_buffer, cfg.stop_buffer)
-            target_levels = [lv for lv in levels if lv.touches >= cfg.target_min_touches]
-            target = next_level_beyond(target_levels, entry, d)
-            if target is None:
-                continue
+            if cfg.target_mode == "fixed_r":
+                risk = (entry - stop) * d
+                if not risk > 0:
+                    continue
+                target_price = entry + d * cfg.target_r * risk
+            else:
+                target_levels = [lv for lv in levels if lv.touches >= cfg.target_min_touches]
+                target = next_level_beyond(target_levels, entry, d)
+                if target is None:
+                    continue
+                target_price = target.price
             counts["target"] += 1
 
-            rr_planned = risk_reward(entry, stop, target.price, d, cfg.rr_expansion)
-            if not rr_planned >= cfg.min_rr:  # NaN (non-positive risk) fails too
+            rr_planned = risk_reward(entry, stop, target_price, d, cfg.rr_expansion)
+            if not rr_planned >= cfg.min_rr - 1e-9:  # tolerance: 2.5R target must pass a 2.5 gate
                 continue
             counts["rr"] += 1
 
@@ -303,8 +312,8 @@ def scan_breakout(
                 continue
             counts["trigger"] += 1
 
-            rr_fill = risk_reward(trig.fill_price, trig.stop_price, target.price, d)
-            if not rr_fill >= cfg.min_rr:
+            rr_fill = risk_reward(trig.fill_price, trig.stop_price, target_price, d)
+            if not rr_fill >= cfg.min_rr - 1e-9:
                 continue
             counts["fill_rr"] += 1
 
@@ -320,7 +329,7 @@ def scan_breakout(
                     entry_planned=entry,
                     fill_price=trig.fill_price,
                     stop=trig.stop_price,
-                    target=target.price,
+                    target=target_price,
                     rr_planned=float(rr_planned),
                     rr_fill=float(rr_fill),
                     rel_volume=float(relvol[t]),

@@ -1,0 +1,73 @@
+{
+  "all": {
+    "trades": 6,
+    "win_rate": 0.3333333333333333,
+    "expectancy_r": 0.5301053113553895,
+    "expectancy_r_ci95": [
+      -1.0,
+      2.2890338827840893
+    ],
+    "total_r": 3.180631868132337,
+    "avg_win_r": 3.590315934066169,
+    "avg_loss_r": -1.0,
+    "profit_factor": 1.7951579670330844,
+    "max_drawdown_r": 3.0,
+    "max_drawdown_pct": 2.9549000000002703,
+    "max_losing_streak": 3,
+    "final_equity": 10305.510000000004,
+    "return_pct": 3.055100000000044,
+    "avg_bars_held": 76.33333333333333,
+    "same_bar_conflicts": 0,
+    "exit_reasons": {
+      "stop": 4,
+      "target": 2
+    }
+  },
+  "in_sample": {
+    "trades": 1,
+    "win_rate": 0.0,
+    "expectancy_r": -1.0,
+    "expectancy_r_ci95": [
+      NaN,
+      NaN
+    ],
+    "total_r": -1.0,
+    "avg_win_r": NaN,
+    "avg_loss_r": -1.0,
+    "profit_factor": 0.0,
+    "max_drawdown_r": 1.0,
+    "max_drawdown_pct": 0.998400000000256,
+    "max_losing_streak": 1,
+    "final_equity": 9900.159999999974,
+    "return_pct": -0.9984000000002546,
+    "avg_bars_held": 8.0,
+    "same_bar_conflicts": 0,
+    "exit_reasons": {
+      "stop": 1
+    }
+  },
+  "out_of_sample": {
+    "trades": 5,
+    "win_rate": 0.4,
+    "expectancy_r": 0.8361263736264675,
+    "expectancy_r_ci95": [
+      -1.0,
+      2.946840659340907
+    ],
+    "total_r": 4.180631868132338,
+    "avg_win_r": 3.590315934066169,
+    "avg_loss_r": -1.0,
+    "profit_factor": 2.3935439560441125,
+    "max_drawdown_r": 2.0,
+    "max_drawdown_pct": 2.9549000000002703,
+    "max_losing_streak": 2,
+    "final_equity": 10305.510000000004,
+    "return_pct": 3.055100000000044,
+    "avg_bars_held": 90.0,
+    "same_bar_conflicts": 0,
+    "exit_reasons": {
+      "stop": 3,
+      "target": 2
+    }
+  }
+}
