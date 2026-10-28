@@ -120,7 +120,7 @@ class BreakoutConfig:
     rr_expansion: float = 1.5  # assumed adverse slippage on entry for the planned R:R
     target_min_touches: int = 4  # any swing level can serve as a target
     target_mode: str = "fixed_r"   # "fixed_r" | "structure"
-    target_r: float = 2
+    target_r: float = 1.5
 
     directions: tuple = (LONG, SHORT)
 
